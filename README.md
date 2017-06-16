@@ -1,4 +1,4 @@
-# Laravel MultiAuthRole
+# MultiRole & MultiUser for Laravel
 
 
 
@@ -48,7 +48,7 @@ protected $routeMiddleware = [
 
 ```
 #####
-> vendor/laravel/framework/src/illuminate/Foundation/Auth/RegistersUsers.php
+> vendor/laravel/framework/src/illuminate/Foundation/Auth/RegistersUsers.php  in `line - 35`
 
 ```php
 

@@ -123,7 +123,7 @@ class MultiAuthRoleCommand extends Command
               // $bar->advance();
           }
 
-          $this->info('Laravel MultiRser & MultiRole successfully.');
+          $this->info('Laravel MultiUser & MultiRole successfully.');
       }
 
       /**
@@ -263,7 +263,7 @@ class MultiAuthRoleCommand extends Command
       protected function exportJs()
       {
           foreach ($this->js as $key => $value) {
-              if (file_exists(base_path('public/js'.$value)) && ! $this->option('force')) {
+              if (file_exists(base_path('public/js/'.$value)) && ! $this->option('force')) {
                   if (! $this->confirm("The [{$value}] view already exists. Do you want to replace it?")) {
                       continue;
                   }
@@ -271,7 +271,7 @@ class MultiAuthRoleCommand extends Command
 
               copy(
                   __DIR__.'/stubs/make/js/'.$key,
-                  base_path('public/js'.$value)
+                  base_path('public/js/'.$value)
               );
           }
       }
@@ -284,7 +284,7 @@ class MultiAuthRoleCommand extends Command
       protected function exportCss()
       {
           foreach ($this->css as $key => $value) {
-              if (file_exists(base_path('public/css'.$value)) && ! $this->option('force')) {
+              if (file_exists(base_path('public/css/'.$value)) && ! $this->option('force')) {
                   if (! $this->confirm("The [{$value}] view already exists. Do you want to replace it?")) {
                       continue;
                   }
@@ -292,7 +292,7 @@ class MultiAuthRoleCommand extends Command
 
               copy(
                   __DIR__.'/stubs/make/css/'.$key,
-                  base_path('public/css'.$value)
+                  base_path('public/css/'.$value)
               );
           }
       }
@@ -306,7 +306,7 @@ class MultiAuthRoleCommand extends Command
       protected function exportFonts()
       {
           foreach ($this->fonts as $key => $value) {
-              if (file_exists(base_path('public/fonts'.$value)) && ! $this->option('force')) {
+              if (file_exists(base_path('public/fonts/'.$value)) && ! $this->option('force')) {
                   if (! $this->confirm("The [{$value}] view already exists. Do you want to replace it?")) {
                       continue;
                   }
@@ -314,7 +314,7 @@ class MultiAuthRoleCommand extends Command
 
               copy(
                   __DIR__.'/stubs/make/fonts/'.$key,
-                  base_path('public/fonts'.$value)
+                  base_path('public/fonts/'.$value)
               );
           }
       }

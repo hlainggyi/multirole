@@ -24,7 +24,7 @@ class MultiAuthRoleCommand extends Command
        *
        * @var string
        */
-      protected $description = 'Make MultiUser & MultiRole';
+      protected $description = 'Create MultiUser & MultiRole';
 
       /**
        * The views that need to be exported.
@@ -63,7 +63,7 @@ class MultiAuthRoleCommand extends Command
           'Auth/UserCtrl.php' => '/Auth/UserCtrl.php',
       ];
       protected $images = [
-          'images/default.png' => '/user_images/default.png',
+          'default.png' => '/default.png',
       ];
       protected $js = [
         'jasny-bootstrap.min.js' => 'jasny-bootstrap.min.js',
@@ -118,8 +118,8 @@ class MultiAuthRoleCommand extends Command
                   FILE_APPEND
               );
 
-              $this->helper->replaceAndSave(getcwd().'/app/Http/Kernel.php', 'App\Providers\RouteServiceProvider::class,', $appConfigLine);
-              $bar->advance();
+              // $this->helper->replaceAndSave(getcwd().'/app/Http/Kernel.php', 'App\Providers\RouteServiceProvider::class,', $appConfigLine);
+              // $bar->advance();
           }
 
           $this->info('Laravel MultiRser & MultiRole successfully.');
@@ -140,12 +140,12 @@ class MultiAuthRoleCommand extends Command
               mkdir(resource_path('views/auth/passwords'), 0755, true);
           }
 
-          if (! is_dir('uploads/user_images')) {
-              mkdir('uploads/user_images', 0755, true);
+          if (! is_dir('public/uploads/user_images')) {
+              mkdir('public/uploads/user_images', 0755, true);
           }
 
-          if (! is_dir('fonts')) {
-              mkdir('fonts', 0755, true);
+          if (! is_dir('public/fonts')) {
+              mkdir('public/fonts', 0755, true);
           }
       }
 
@@ -325,7 +325,7 @@ class MultiAuthRoleCommand extends Command
        */
       protected function exportImages()
       {
-          foreach ($this->controllers as $key => $value) {
+          foreach ($this->images as $key => $value) {
               // if (file_exists(resource_path('app/Http/Controllers'.$value)) && ! $this->option('force')) {
               //     if (! $this->confirm("The [{$value}] view already exists. Do you want to replace it?")) {
               //         continue;
@@ -334,7 +334,7 @@ class MultiAuthRoleCommand extends Command
 
               copy(
                   __DIR__.'/stubs/make/images/'.$key,
-                  'uploads/user_images'.$value
+                  'public/uploads/user_images'.$value
               );
           }
       }

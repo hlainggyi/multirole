@@ -72,7 +72,7 @@ class MultiAuthRoleCommand extends Command
         'font-awesome.min.css' => 'font-awesome.min.css',
         'jasny-bootstrap.min.css' => 'jasny-bootstrap.min.css',
       ];
-      protected $fonts => [
+      protected $fonts = [
         'fontawesome-webfont.eot' => 'fontawesome-webfont.eot',
         'fontawesome-webfont.svg' => 'fontawesome-webfont.svg',
         'fontawesome-webfont.ttf' => 'fontawesome-webfont.ttf',

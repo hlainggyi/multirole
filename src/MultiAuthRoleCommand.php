@@ -61,6 +61,7 @@ class MultiAuthRoleCommand extends Command
       protected $controllers = [
           'Auth/RegisterController.php' => '/Auth/RegisterController.php',
           'Auth/UserCtrl.php' => '/Auth/UserCtrl.php',
+          'Auth/RoleCtrl.php' => '/Auth/RoleCtrl.php',
       ];
       protected $images = [
           'default.png' => '/default.png',

@@ -47,6 +47,25 @@ protected $routeMiddleware = [
   php artisan db:seed
 
 ```
+#####
+> vendor/laravel/framework/src/illuminate/Foundation/Auth/RegistersUsers.php
+
+```php
+
+public function register(Request $request)
+{
+    $this->validator($request->all())->validate();
+
+    event(new Registered($user = $this->create($request->all())));
+
+    // $this->guard()->login($user);  <= this one remove
+
+    return $this->registered($request, $user)
+                    ?: redirect($this->redirectPath());
+}
+
+```
+
 ###### Default
 > username : admin@learn88.dev
 

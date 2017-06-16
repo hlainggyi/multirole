@@ -25,10 +25,11 @@ class UserCtrl extends Controller
 
     public function index()
     {
-        $admin = Role::all();
-        $roles = Role::all();
+        // $admin = Role::all();
+        // $roles = Role::all();
+        $users = User::where('active', 0)->get();
 
-        return view('auth.index')->withRoles($roles)->withAdmin($admin);
+        return view('auth.index', compact('users'));
     }
 
 
@@ -36,7 +37,9 @@ class UserCtrl extends Controller
     {
         $user = User::find($id);
 
-        return view('auth.show')->with('user', $user);
+        $roles = Role::where('active', 0)->get();
+
+        return view('auth.show')->with('user', $user)->with('roles', $roles);
     }
 
     public function delete($id)
@@ -68,6 +71,7 @@ class UserCtrl extends Controller
 
     public function update_avatar(Request $request)
     {
+      // dd ('OK');
       if ($request->hasFile('avatar')) {
         // get file name
         $avatar = $request->file('avatar')->getClientOriginalName();
@@ -90,45 +94,14 @@ class UserCtrl extends Controller
 
     public function AdminAssignRoles(Request $request)
     {
+      $roles = Role::all();
       $user = User::where('email', $request['email'])->first();
       $user->roles()->detach();
-      if ($request['role_user']) {
-        $user->roles()->attach(Role::where('name', 'User')->first());
+      foreach ($roles as $role) {
+        if ($request[$role['name']]) {
+          $user->roles()->attach(Role::where('name', $role['name'])->first());
+        }
       }
-      if ($request['role_personal_r']) {
-        $user->roles()->attach(Role::where('name', 'Personal Read')->first());
-      }
-      if ($request['role_personal_w']) {
-        $user->roles()->attach(Role::where('name', 'Personal Write')->first());
-      }
-      if ($request['role_personal_m']) {
-        $user->roles()->attach(Role::where('name', 'Personal Manager')->first());
-      }
-      if ($request['role_account_r']) {
-        $user->roles()->attach(Role::where('name', 'Account Read')->first());
-      }
-      if ($request['role_account_w']) {
-        $user->roles()->attach(Role::where('name', 'Account Write')->first());
-      }
-      if ($request['role_account_m']) {
-        $user->roles()->attach(Role::where('name', 'Account Manager')->first());
-      }
-      if ($request['role_store_r']) {
-        $user->roles()->attach(Role::where('name', 'Store Read')->first());
-      }
-      if ($request['role_store_w']) {
-        $user->roles()->attach(Role::where('name', 'Store Write')->first());
-      }
-      if ($request['role_store_m']) {
-        $user->roles()->attach(Role::where('name', 'Store Manager')->first());
-      }
-      if ($request['role_user_manager']) {
-        $user->roles()->attach(Role::where('name', 'User Manager')->first());
-      }
-      if ($request['role_admin']) {
-        $user->roles()->attach(Role::where('name', 'Administrator')->first());
-      }
-
       return back();
     }
 

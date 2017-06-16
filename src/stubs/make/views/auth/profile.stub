@@ -13,14 +13,14 @@
                 <div class="text-center" style="margin-top:5%;">
                   <div class="fileinput fileinput-new" data-provides="fileinput">
                     <div class="fileinput-new thumbnail text-center" style="width:150px; height:150px; border-radius:50%;">
-                      <?php $image = !is_null($user->avatar) ? $user->avatar : 'default.jpg' ?>
-                      {!! Html::image('uploads/user_images/' . $image, $user->name, ['class'=>'media-object', 'style'=>'width:150px; height:150px; border-radius:50%;']) !!}
+                      <img src="/uploads/user_images/{{ Auth::user()->avatar }}" class="media-object" alt="" style="width:150px; height:150px; border-radius:50%;"/>
+                      {{-- {!! Html::image('uploads/user_images/' . $image, $user->name, ['class'=>'media-object', 'style'=>'width:150px; height:150px; border-radius:50%;']) !!} --}}
                     </div>
 
                     <div class="fileinput-preview fileinput-exists thumbnail text-center" style="width:150px; height:150px; float:left; border-radius:50%;"></div>
 
                       <div class="text-center">
-                        <span class="btn btn-success btn-file btn-sm"><span class="fileinput-new">Change Photo</span><span class="fileinput-exists">Change</span>{!! Form::file('avatar') !!}</span>
+                        <span class="btn btn-success btn-file btn-sm"><span class="fileinput-new">Change Photo</span><span class="fileinput-exists">Change</span><input type="file" name="avatar"></span>
                         <a href="#" class="btn btn-primary fileinput-exists btn-sm" data-dismiss="fileinput">Remove</a>
                       </div>
                   </div>

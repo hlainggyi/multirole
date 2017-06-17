@@ -15,7 +15,7 @@ class MultiAuthRoleCommand extends Command
        *
        * @var string
        */
-      protected $signature = 'learn88:multirole
+      protected $signature = 'make:multirole
                       {--views : Only scaffold the authentication views}
                       {--force : Overwrite existing views by default}';
 
@@ -24,7 +24,7 @@ class MultiAuthRoleCommand extends Command
        *
        * @var string
        */
-      protected $description = 'Create MultiUser & MultiRole';
+      protected $description = 'Create a New MultiUser & MultiRole';
 
       /**
        * The views that need to be exported.

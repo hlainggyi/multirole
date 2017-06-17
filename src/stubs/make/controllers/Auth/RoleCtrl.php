@@ -6,10 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input as input;
 use Illuminate\Support\Facades\Hash;
+use learn88\multirole\Http\Controllers\AssignRoles;
 use App\Role;
+use Validator;
 
 class RoleCtrl extends Controller
 {
+    use AssignRoles;
     /**
      * Display a listing of the resource.
      *
@@ -18,42 +21,50 @@ class RoleCtrl extends Controller
     public function index()
     {
         $roles = Role::where('active', 0)->get();
-
         return view('auth.role', compact('roles'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Get a validator for an incoming registration request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
      */
-    public function store(Request $request)
+    protected function validator(array $data)
     {
-        $role = new Role;
-        $role->name=$request->name;
-        $role->description=$request->description;
-        $role->save();
-
-        return back();
+        return Validator::make($data, [
+            'name' => 'required|max:255',
+            'description' => 'required',
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-          $role = Role::find($id);
-          $role->name=$request->name;
-          $role->description=$request->description;
-          $role->save();
+      /**
+       * Create a new user instance after a valid registration.
+       *
+       * @param  array  $data
+       * @return Role
+       */
+      protected function create(array $data)
+      {
+          return Role::create([
+              'name' => $data['name'],
+              'description' => $data['description'],
+          ]);
+      }
 
-          return back();
-    }
+      /**
+       * Create a new user instance after a valid registration.
+       *
+       * @param  array  $data
+       * @return Role
+       */
+      protected function edit(array $data)
+      {
+          return Role::edit([
+              'name' => $data['name'],
+              'description' => $data['description'],
+          ]);
+      }
 
     /**
      * Remove the specified resource from storage.

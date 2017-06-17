@@ -1,5 +1,7 @@
 # MultiRole & MultiUser for Laravel
 
+[![Latest Version on Packagist][ico-version]][link-packagist]
+[![Software License][ico-license]](license.md)
 
 
 ## Install
@@ -19,8 +21,7 @@ Next, add your `new Provider` to the providers array of `config/app.php:`
   learn88\multirole\multiroleServiceProvider::class,
 
 
-],  
-
+],
 ```
 Next, add your `new Kernel` to the `HTTP kernel`  `$routeMiddleware`
 
@@ -32,45 +33,42 @@ protected $routeMiddleware = [
 
 
 ],  
-
 ```
 
-## Usage
-
-``` php
-  php artisan kopin88:multirole
-
+### New
+**Command:**
+```bash
+  php artisan make:multirole
+```
+```bash
   composer dump-autoload
+```
 
+_required : database_
+```bash
   php artisan migrate
-
+```
+```bash
   php artisan db:seed
-
 ```
-#####
-> vendor/laravel/framework/src/illuminate/Foundation/Auth/RegistersUsers.php  in `line - 35`
 
-```php
-
-public function register(Request $request)
-{
-    $this->validator($request->all())->validate();
-
-    event(new Registered($user = $this->create($request->all())));
-
-    // $this->guard()->login($user);  <= this one remove
-
-    return $this->registered($request, $user)
-                    ?: redirect($this->redirectPath());
-}
-
-```
 
 ###### Default
 > username : admin@learn88.dev
 
 > password : password
 
+
+## Usage
+```php
+    Route::get('users}', [
+      'uses' => 'UserCtrl@index',
+      'as' => 'users.show',
+      'middleware'=>'roles',  // Rroute Middleware Role Check   
+      'roles'=>['role_admin'] // Allow Role Name ['role_name' , 'etc..']
+    ]);
+
+```
 
 ## License
 

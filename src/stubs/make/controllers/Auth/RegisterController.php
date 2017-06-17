@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use learn88\multirole\Http\Controllers\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -28,16 +29,6 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = 'users/list';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    // public function __construct()
-    // {
-    //     $this->middleware('guest');
-    // }
 
     /**
      * Get a validator for an incoming registration request.

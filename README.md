@@ -1,8 +1,9 @@
 # MultiRole & MultiUser for Laravel
 
-[![Latest Version on Packagist][ico-version]][link-packagist]
-[![Software License][ico-license]](license.md)
-
+[![Latest Stable Version](https://poser.pugx.org/learn88/multirole/v/stable)](https://packagist.org/packages/learn88/multirole)
+[![Total Downloads](https://poser.pugx.org/learn88/multirole/downloads)](https://packagist.org/packages/learn88/multirole)
+[![Latest Unstable Version](https://poser.pugx.org/learn88/multirole/v/unstable)](https://packagist.org/packages/learn88/multirole)
+[![License](https://poser.pugx.org/learn88/multirole/license)](https://packagist.org/packages/learn88/multirole)
 
 ## Install
 
@@ -64,8 +65,8 @@ _required : database_
     Route::get('users}', [
       'uses' => 'UserCtrl@index',
       'as' => 'users.show',
-      'middleware'=>'roles',  // Rroute Middleware Role Check   
-      'roles'=>['role_admin'] // Allow Role Name ['role_name' , 'etc..']
+      'middleware'=>'roles',  // route middleware check role   
+      'roles'=>['role_admin'] // allow role name ['role_name' , 'etc..']
     ]);
 
 ```

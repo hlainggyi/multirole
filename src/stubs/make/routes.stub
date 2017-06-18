@@ -1,4 +1,4 @@
-uth::routes();
+Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -12,7 +12,7 @@ Route::group(['prefix' => 'users'], function () {
       'uses' => 'Auth\UserCtrl@show',
       'as' => 'users.show',
       'middleware'=>'roles',    // <---
-      'roles'=>['role_admin']   // <--- 'roles'=>['role_name', 'etc..'] 
+      'roles'=>['role_admin']   // <--- 'roles'=>['role_name', 'etc..']
     ]);
 });
 

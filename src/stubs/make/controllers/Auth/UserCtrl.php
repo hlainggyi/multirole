@@ -34,7 +34,7 @@ class UserCtrl extends Controller
 
         $roles = Role::where('active', 0)->get();
 
-        return view('auth.show')->with('user', $user)->with('roles', $roles);
+        return view('show::show')->with('user', $user)->with('roles', $roles);
     }
 
     public function delete($id)

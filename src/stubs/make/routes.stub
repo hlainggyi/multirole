@@ -1,5 +1,4 @@
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 //User
@@ -15,40 +14,11 @@ Route::group(['prefix' => 'users'], function () {
       'roles'=>['role_admin']   // <--- 'roles'=>['role_name', 'etc..']
     ]);
 });
-
-Route::post('/changepass', [
-  'uses'=>'Auth\UserCtrl@changepass',
-  'as'=>'changepass'
-]);
-
-Route::put('/delete/{id}', [
-  'uses'=>'Auth\UserCtrl@delete',
-  'as'=>'user.delete'
-]);
-
 Route::get('profile', 'Auth\UserCtrl@profile');
 Route::post('profile', 'Auth\UserCtrl@update_avatar')->name('update_avatar');
-
+Route::post('/changepass', ['uses'=>'Auth\UserCtrl@changepass', 'as'=>'changepass']);
+Route::put('/delete/{id}', ['uses'=>'Auth\UserCtrl@delete', 'as'=>'user.delete']);
 // Role
-Route::group(['prefix' => 'roles'], function () {
-  Route::get('/', [
-    'uses' => 'Auth\RoleCtrl@index',
-    'as' => 'roles.index'
-  ]);
-  Route::post('/store', [
-    'uses' => 'Auth\RoleCtrl@store',
-    'as' => 'roles.store'
-  ]);
-  Route::patch('/{role}/update', [
-    'uses' => 'Auth\RoleCtrl@update',
-    'as' => 'roles.update'
-  ]);
-  Route::post('/assign', [
-    'uses'=>'Auth\RoleCtrl@UserAssignRoles',
-    'as'=>'assign'
-  ]);
-  Route::delete('/{role}/delete', [
-    'uses' => 'Auth\RoleCtrl@destory',
-    'as' => 'roles.delete'
-  ]);
-});
+Route::get('/roles', ['uses' => 'Auth\RoleCtrl@index', 'as'=>'roles.index']);
+Route::get('roles/{id}/show', ['uses'=>'Auth\RoleCtrl@Show', 'as'=>'roles.show']);
+Route::put('roles/{role}/delete', ['uses'=>'Auth\RoleCtrl@destroy', 'as'=>'roles.delete']);

@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input as input;
-use Illuminate\Support\Facades\Hash;
 use learn88\multirole\Http\Controllers\AssignRoles;
 use App\Role;
 use Validator;
@@ -53,17 +51,16 @@ class RoleCtrl extends Controller
       }
 
       /**
-       * Create a new user instance after a valid registration.
+       * Show a Role
        *
-       * @param  array  $data
-       * @return Role
+       * @param  array  $role
+       * @return Show
        */
-      protected function edit(array $data)
+      public function Show($id)
       {
-          return Role::edit([
-              'name' => $data['name'],
-              'description' => $data['description'],
-          ]);
+        $role = Role::find($id);
+
+        return view('auth.role-show', compact('role'));
       }
 
     /**

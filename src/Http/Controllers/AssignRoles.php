@@ -37,7 +37,7 @@ trait AssignRoles
     public function update(Request $request, $id)
     {
         $this->validator($request->all())->validate();
-        $role = $this->edit($request->find($id));
+        $role = Role::find($id)->update($request->all());
         return  back();
     }
 

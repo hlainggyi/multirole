@@ -3,8 +3,9 @@
     "type": "library",
     "description": "MultiRole & MultiUser for Laravel",
     "keywords": [
-        "learn88",
-        "multirole"
+        "laravel",
+        "multiroles",
+        "multiusers"
     ],
     "homepage": "https://github.com/learn88/multirole",
     "license": "MIT",

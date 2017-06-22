@@ -1,9 +1,22 @@
 @extends('layouts.app')
-
+@section('style')
+  <style media="screen">
+    .badge-success {
+        color: #fff;
+        background-color: #2ab27b;
+        border-color: #259d6d;
+      }
+    .badge-success:hover {
+        color: #fff;
+        background-color: #196c4b;
+        border-color: #0d3625;
+      }
+  </style>
+@endsection
 @section('content')
-<div class="container">
+  <div class="container">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-7 col-md-offset-1">
           <div class="panel panel-default">
             <div class="panel-heading">
               Role List
@@ -15,6 +28,8 @@
                     <th>role_name</th>
                     <th>Description</th>
                     <th style="width:80px"></th>
+                    <th style="width:50px" class="text-center">Edit</th>
+                    <th style="width:50px" class="text-center">Delete</th>
                   </thead>
                   <tbody>
                     @foreach ($roles as $role)
@@ -22,7 +37,80 @@
                         <td>#</td>
                         <td>{{ $role->name }}</td>
                         <td>{{ $role->description }}</td>
-                        <td class="text-center text-primary"><span class="badge">{{ $role->users->count() }}</span></td>
+                        <td class="text-center text-primary">
+                          <a href="{{ route('roles.show', $role->id) }}">
+                            <span class="badge badge-success">{{ $role->users->count() }}</span>
+                          </a>
+                        </td>
+                        <td class="text-center">
+                            <a href="#" rel="tooltip" title="Edit" data-toggle="modal" data-target="#roleEdit{{ $role->id }}">
+                              <i aria-hidden="true" class="fa fa-edit fa-lg text-primary"></i>
+                            </a>
+                            <div class="modal fade" id="roleEdit{{ $role->id }}" tabindex="-1" role="dialog" aria-labelledby="roleEditModel{{ $role->id }}" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <form method="post" action="{{ route('roles.update', $role->id) }}" enctype="multipart/form-data">
+                                  <input name="_method" type="hidden" value="put">
+                                  {{ csrf_field() }}
+                                  <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title text-primary" id="roleEditModel{{ $role->id }}">{{ $role->name }} Edit</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="row">
+                                      <div class="col-md-12">
+                                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                                          <input type="text" name="name" value="{{$role->name}}" class="form-control" autofocus="autofocus">
+                                            <small class="text-danger">{{ $errors->first('name') }}</small>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-12">
+                                        <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
+                                            <input type="text" name="description" value="{{ $role->description }}" class="form-control">
+                                            <small class="text-danger">{{ $errors->first('description') }}</small>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="submit" class="btn btn-success btn-sm"><strong>Save</strong></button>
+                                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"><strong>Cancel</strong></button>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <a href="#" rel="tooltip" title="Delete" data-toggle="modal" data-target="#roleDel{{ $role->id }}">
+                              <i aria-hidden="true" class="fa fa-trash fa-lg text-danger"></i>
+                            </a>
+                            <div class="modal fade" id="roleDel{{ $role->id }}" tabindex="-1" role="dialog" aria-labelledby="roleDelModel{{ $role->id }}" aria-hidden="true">
+                              <div class="modal-dialog modal-sm">
+                                <form method="post" action="{{ route('roles.delete', $role->id) }}" enctype="multipart/form-data">
+                                  <input name="_method" type="hidden" value="put">
+                                  {{ csrf_field() }}
+                                  <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title text-primary" id="roleDelModel{{ $role->id }}">{{ $role->name }} Delete</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="row">
+                                      <div class="col-md-12">
+                                        <h3 class="text-center">Are you sure ?</h3>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="submit" class="btn btn-success btn-sm"><strong>Sure</strong></button>
+                                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"><strong>Cancel</strong></button>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                        </td>
                       </tr>
                     @endforeach
                   </tbody>
@@ -30,17 +118,15 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="panel panel-default">
                 <div class="panel-heading">New Role</div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('roles.store') }}">
                         {{ csrf_field() }}
-
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <div class="col-md-12">
                                 <input id="name" type="text" class="form-control" name="name" placeholder="role_name" autofocus>
-
                                 @if ($errors->has('name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -50,7 +136,7 @@
                         </div>
                         <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
                             <div class="col-md-12">
-                                <input type="textarea" name="description" rows="20" class="form-control" placeholder="Description">
+                                <input type="textarea" name="description" rows="2" class="form-control" placeholder="Description">
                                 @if ($errors->has('description'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('description') }}</strong>
@@ -58,7 +144,6 @@
                                 @endif
                             </div>
                         </div>
-
                         <div class="form-group">
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-sm btn-success">
@@ -71,24 +156,5 @@
             </div>
         </div>
     </div>
-</div>
+  </div>
 @endsection
-
-
-
-
-  {{-- <div class="list-group">
-    <a href="#" class="list-group-item active">
-        Role List
-    </a>
-    @foreach ($roles as $name => $role)
-      <a href="#" class="list-group-item">
-        <span class="row">
-          <span class="col-md-1">#</span>
-          <span class="col-md-5">{{ $role->name }}</span>
-          <span class="col-md-5">{{ $role->description }}</span><span class="badge">14</span>
-        </span>
-
-      </a>
-    @endforeach
-  </div> --}}
